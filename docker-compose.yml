@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  postgres_fardhoz:
+    image: postgres:15
+    container_name: postgres_fardhoz
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "22148:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - uts_network
+
+  pgadmin_fardhoz:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_fardhoz
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "44148:80"
+    networks:
+      - uts_network
+    depends_on:
+      - postgres_fardhoz
+
+networks:
+  uts_network:
+
+volumes:
+  postgres_data:
